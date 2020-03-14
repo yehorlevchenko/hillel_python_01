@@ -3,7 +3,7 @@
 
 def do_cache(maxsize):
     def decorator(func):
-        cache = dict() # этот дикт будет доступен при следующих вызовах
+        cache = dict() # этот лист будет доступен при следующих вызовах
         def wrapper(*args):
             if len(cache) >= maxsize:
                 # Если количество закешированных элементов превышает maxsize,
