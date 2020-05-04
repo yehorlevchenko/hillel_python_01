@@ -1,0 +1,10 @@
+import asyncio
+
+
+async def ping_pong():
+    while True:
+        print('Ping')
+        await asyncio.sleep(3)
+        print('Pong')
+
+asyncio.run(ping_pong())
