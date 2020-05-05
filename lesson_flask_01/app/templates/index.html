@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Read some shit here:</h1>
+    {% for message in messages %}
+      {{ message["text"] }} <br>
+      by {{ message["author"] }}
+      <hr>
+    {% endfor %}
+{% endblock %}
