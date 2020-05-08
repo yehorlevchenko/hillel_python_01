@@ -2,5 +2,29 @@
 
 {% block content %}
   <h1>Post some shit here</h1>
-  
+  <form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+
+    {{ form.username.label }}<br>
+    {{ form.username(size=32) }}<br>
+    {% for error in form.username.errors %}
+    <span style="color: red;">{{ error }}</span>
+    {% endfor %}
+
+    <br>
+
+    {{ form.text.label }}<br>
+    {{ form.text(size=32) }}<br>
+    {% for error in form.text.errors %}
+    <span style="color: red;">{{ error }}</span>
+    {% endfor %}
+
+    <br>
+
+    {{ form.is_important.label }} {{ form.is_important() }}<br>
+
+    <br>
+
+    {{ form.submit() }}
+  </form>
 {% endblock %}
