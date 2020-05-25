@@ -1,0 +1,23 @@
+l = [1, 2, 3, [5, 6, [7, 8]], 9]
+flatlist = []
+
+
+def flat(anylist):
+    for i in anylist:
+        if type(i) == list:
+            flat(i)
+        else:
+            flatlist.append(i)
+
+
+def flatten_list(some_list):
+    for i in some_list:
+        if isinstance(i, list):
+            yield from flatten_list(i)
+        else:
+            yield i
+
+
+print("Nested list is", l)
+flat(l)
+print("Flat list is", flatlist)

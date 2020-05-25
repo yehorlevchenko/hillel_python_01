@@ -1,0 +1,31 @@
+from multiprocessing import Process, Pipe
+from time import sleep
+from os import getpid
+
+
+def ponger(receiver, sender, response):
+    while True:
+        msg = receiver.recv()
+        print(f"Process {getpid()} got message: {msg}")
+        #print(f"{getpid()} receiving: {msg.sender.recv()}")
+        #print(f"{getpid()} sleeps")
+        sleep(1)
+
+        # receive a message
+        # print it as f"Process{getpid()} got message: {msg}"
+        # sleep before responding
+        # send response message back
+        receiver.send(response)
+
+
+if __name__ == "__main__":
+    receiver, sender = Pipe()
+    #receiver2, sender2 = Pipe()
+    msg1 = Process(target=ponger, args=(receiver, sender,'Pong')).start()
+    msg2 = Process(target=ponger, args=(sender, receiver, 'Ping')).start()
+    receiver.send("Ping or Pong?")
+    # create 2 pipes
+    # create 2 processes that will use ponger, give them different sides of pipes
+    # they also need a specific message (either ping or pong)
+    # start both processes
+    # initiate ping-pong by sending first message to one of the pipes
