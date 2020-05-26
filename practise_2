@@ -1,0 +1,81 @@
+import os
+
+
+# Напишите функцию копирования файлов. На вход ваша функция принимает два аргумента:
+# - путь файла который необходимо скопировать
+# - путь каталога куда этот файл необходимо скопировать
+
+def copyFileDir(inFile, outDir):
+    file_name = inFile.split('/')[-1]
+    with open(inFile, 'r') as source,\
+            open(f'{outDir}/{file_name}', 'a') as recipient:  
+        recipient.write(source.read())
+        
+# The 'r' means that the file should be opened in read mode 
+# The 'a' means append to a file or start writing at the end
+
+
+# Напишите декоратор для превращения функции print в генератор html-тегов
+# Декоратор должен принимать список тегов italic, bold, underline
+
+def str_to_html(tags):
+    def decorator(func):
+        tag_base = {
+            "italic": f"<i>%text%</i>",
+            "bold": f"<b>%text%</b>",
+            "underline": f"<u>%text%</u>",
+        }
+        def wrapper(text):
+            result = text
+            for tag in tags:
+                result = tag_base[tag].replace('%text%', result)
+            return result
+        return wrapper
+    return decorator
+
+
+@str_to_html(["italic", "bold"])
+def get_text(text):
+    return text
+
+
+# Напишите функцию, которая возвращает список файлов из директории.
+# Напишите декоратор для этой функции, который прочитает все файлы с
+# раширением .log из найденных
+
+path = "/LogDataPath/"
+
+def log_reading(func):
+    def wrapper(*args):
+        return [f for f in listdir(path) if isfile(join(path, f)) and f.endswith(".log")]
+    return wrapper
+
+@log_reading
+def get_files():
+    return os.listdir()
+
+
+# Напишите функцию, которая читает и распечатывает текстовый файл.
+# Напишите декоратор к этой функции, который печатает название файла и количество слов в нем
+
+input_file_name = 'dec.txt'
+
+def decorator_function(read_file):
+    def wrapper():
+        a = read_file()
+        count = 0
+        name = os.path.basename(os.path.join(os.getcwd(), 'dec.txt'))
+        print(name)
+        for x in a[f'{input_file_name}']:
+            count += len(x.split(' '))
+        print(f'Number of words in file: {count}')
+
+    return wrapper
+
+@decorator_function
+def read_file():
+    opening = open(input_file_name, "r")
+    reading = opening.readlines()
+    return {input_file_name: reading}
+
+read_file()
